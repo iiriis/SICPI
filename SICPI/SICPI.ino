@@ -11,21 +11,21 @@ DHTStable DHT;
 #define pump 12
 
 
-double temp = 0.0, humid = 0.0;
+double temp = 0.0, humid = 0.0, soilraw = 0.0, mqraw = 0.0;
 
 
 void setup() {
   for (;;)
   { 
 
-    readDHT();
+    readSensors();
     Serial.print(humid);
     Serial.print(" ");
     Serial.print(temp);
     Serial.print(" ");
-    Serial.print(analogRead(mq2));
+    Serial.print(mqraw);
     Serial.print(" ");
-    Serial.println(analogRead(soilm));  
+    Serial.println(soilraw);  
 
   }  
 
@@ -36,12 +36,14 @@ void loop() {
 }
 
 
-void readDHT()
+void readSensors()
 {
   if (!DHT.read11(DHT11_PIN))
   {
     temp = DHT.getTemperature();
     humid = DHT.getHumidity();
   }
-}
 
+  mqraw=analogRead(mq2);
+  soilraw=analogRead(soilm); 
+}
